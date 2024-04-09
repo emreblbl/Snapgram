@@ -1,3 +1,4 @@
+import { IContextType, IUser } from '@/types';
 import { Biohazard } from 'lucide-react';
 import { createContext, useContext, useEffect, useState} from 'react';
 
@@ -18,9 +19,29 @@ const INITIAL_STATE = {
     setIsAuthenticated: () => {},
     checkAuthUser: async () => false as boolean,
 }
-const AuthContext = () => {
+const AuthContext = createContext<IContextType>(INITIAL_STATE);
+
+const AuthProvider = ({children}: {children: React.ReactNode}) => {
+    const[user, setUser] = useState<IUser>(INITIAL_USER);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    const checkAuthUser = () => {
+        
+    }
+
+    const value = {
+        user,
+        setUser,
+        isLoading,
+        isAuthenticated,
+        setIsAuthenticated,
+        checkAuthUser
+    }
     return(
-        <div>AuthContext</div>
+        <AuthContext.Provider value={value}>
+            {children}
+        </AuthContext.Provider>
     )
 }
 
