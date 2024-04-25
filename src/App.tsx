@@ -10,7 +10,6 @@ import { Toaster } from "@/components/ui/toaster"
 const App = () => { 
     return (
     <main className="flex h-screen">
-        <Router>
         <Routes>
             <Route element={<AuthLayout />} > 
             {/*public routes*/}
@@ -24,7 +23,6 @@ const App = () => {
                         {/*private routes*/}
 
         </Routes>
-        </Router>
         <Toaster />
       </main>
     )

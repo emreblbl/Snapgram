@@ -1,4 +1,4 @@
-import { ID } from "appwrite";
+import { ID, Query } from "appwrite";
 import { INewUser } from "@/types";
 import { account, appwriteConfig, avatars, databases } from "./config";
 import { Url } from "url";
@@ -39,3 +39,21 @@ export async function signInAccount(user: { email: string; password: string }) {
     console.log(error);
   }}
 
+
+export async function getCurrentUser(){
+  try{
+    const currentAccount = await account.get();
+
+    if(!currentAccount) throw new Error("Account not found");
+
+    const currentUser = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      [Query.equal('account',currentAccount.$id)]
+    )
+    if(!currentUser) throw new Error("User not found");
+    return currentUser.documents[0];
+  }
+  catch(error){
+    console.log(error);
+  }}
